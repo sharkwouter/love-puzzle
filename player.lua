@@ -19,9 +19,6 @@ function playerMove(direction)
   --if the player isn't moving, set it in motion. Otherwise set the next move to make
   if (player.isMoving) then
     --Only set the next move if we have moved at least half a square
-    local difX = player.x % level.blocksize
-    local difY = player.y % level.blocksize
-    print(difX)
     if((direction == player.directionBody) == false) then
       player.nextMoveDirection = direction
       player.nextMoveSet = true
