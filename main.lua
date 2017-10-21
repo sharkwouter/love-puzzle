@@ -37,7 +37,10 @@ function love.update(dt)
 end
 
 function love.draw()
+  --draw level
   levelDrawGrid()
+  
+  --draw player
   playerDraw()
   playerDrawAim()
   
