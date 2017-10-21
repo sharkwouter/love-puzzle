@@ -1,12 +1,13 @@
 --Create player object with variables
 player.size = level.blocksize
-player.x = player.size
-player.y = player.size
+player.x = player.size*5
+player.y = player.size*5
 player.moveSpeed = level.blocksize*4
 player.directionAim = 0
 player.directionBody = 0
 player.isMoving = false
 player.colorBody = {0,100,255}
+player.colorLaser = {255,0,0}
 
   
 --variables used to responding to a button press early
@@ -17,7 +18,10 @@ player.nextMoveDirection = 0
 function playerMove(direction)
   --if the player isn't moving, set it in motion. Otherwise set the next move to make
   if (player.isMoving) then
-    --Only set the next move if it is in a diffent direction
+    --Only set the next move if we have moved at least half a square
+    local difX = player.x % level.blocksize
+    local difY = player.y % level.blocksize
+    print(difX)
     if((direction == player.directionBody) == false) then
       player.nextMoveDirection = direction
       player.nextMoveSet = true
@@ -35,34 +39,32 @@ end
 
 --Draw the aim line
 function playerDrawAim()
-  local hit = false
+  --only calculate if the player is not moving
+  if(player.isMoving == false) then
+    local hit = false
   
-  local point = {}
-  point.x = player.x
-  point.y = player.y
+    local point = {}
+    point.x = player.x
+    point.y = player.y
   
-  --calculate the movement per iteration
-  local movement = calculateMovementDegrees(player.directionAim,1)
+    --calculate the movement per iteration
+    local movement = calculateMovementDegrees(player.directionAim,1)
 
-  while(hit == false) do
-    --move the cursor
-    point.x = point.x + movement.x
-    point.y = point.y + movement.y
+    while(hit == false) do
+      --move the cursor
+      point.x = point.x + movement.x
+      point.y = point.y + movement.y
     
-    --iterate until you find the last point
-    if(point.x < level.blocksize/2) then
-      hit = true
-    elseif(point.y < level.blocksize/2) then
-      hit = true
-    elseif(point.x > window.width-level.blocksize/2) then
-      hit = true
-    elseif(point.y > window.height-level.blocksize/2) then
-      hit = true
+      --set hit to true if we're exiting the grid
+      if(point.x < level.blocksize/2 or point.y < level.blocksize/2 or point.x > window.width-level.blocksize/2 or point.y > window.height-level.blocksize/2) then
+        hit = true
+      end
     end
-  end
   
-  --draw the line
-  love.graphics.line(player.x, player.y, point.x, point.y)
+    --draw the line
+    love.graphics.setColor(player.colorLaser)
+    love.graphics.line(player.x, player.y, point.x, point.y)
+  end
 end
 
 --Is called all the time, keeps everything up to date

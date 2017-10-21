@@ -41,8 +41,8 @@ function love.draw()
   levelDrawGrid()
   
   --draw player
-  playerDraw()
   playerDrawAim()
+  playerDraw()
   
   --draw fps
   love.graphics.print(love.timer.getFPS(),0,0)
