@@ -1,5 +1,4 @@
 --Create player object with variables
-player = {}
 player.size = level.blocksize
 player.x = player.size
 player.y = player.size

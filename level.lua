@@ -1,3 +1,15 @@
+level.width = 10
+level.height = 10
+level.blocksize = 48
+level.colorBackground = {50,200,0}
+level.colorGrid = {0,0,0}
+
+window.width = (level.width+1)*level.blocksize
+window.height = (level.height+1)*level.blocksize
+
+--resize window to the level size
+love.window.setMode(window.width, window.height, {})
+
 --set background color
 love.graphics.setBackgroundColor(level.colorBackground)
 

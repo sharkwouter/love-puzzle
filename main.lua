@@ -1,31 +1,24 @@
 function love.load()
-  --base variables which count for every level
+  --objects for level
   level = {}
-  level.width = 10
-  level.height = 10
-  level.blocksize = 48
-  level.colorBackground = {50,200,0}
-  level.colorGrid = {0,0,0}
-    
-  --base variables for the window, allows us to resize it to the correct size
   window = {}
-  window.width = (level.width+1)*level.blocksize
-  window.height = (level.height+1)*level.blocksize
-
-  --resize window to the level size
-  love.window.setMode(window.width, window.height, {})
+  tiles = {}
+  enemies = {}
+  
+  --object for player
+  player = {}
   
   --load other project files
-  require("player")
-  require("level")
   require("mouse")
+  require("level")
+  require("player")
 end
 
 function love.update(dt)
   --set move coordinates
   mouseUpdatePosition()
   
-  --move player
+  --keyboard input
     if love.keyboard.isDown("s") then
     playerMove(0)
   end
@@ -39,6 +32,7 @@ function love.update(dt)
     playerMove(270)
   end
   
+  --move player
   playerUpdatePosition(dt)
 end
 
@@ -46,4 +40,7 @@ function love.draw()
   levelDrawGrid()
   playerDraw()
   playerDrawAim()
+  
+  --draw fps
+  love.graphics.print(love.timer.getFPS(),0,0)
 end
